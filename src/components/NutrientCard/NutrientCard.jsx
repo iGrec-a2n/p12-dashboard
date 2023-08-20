@@ -1,35 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styles from './NutrientCard.module.css';
 
-const Card = styled.div`
-  height: 124px;
-  width: 100%;
-  max-width: 258px;
-  padding: 32px 2.2vw 32px 2.2vw;
-  background-color: #fbfbfb;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-
-  img {
-    width: 60px;
-    height: 60px;
-    margin-right: 24px;
-  }
-
-  p {
-    font-size: 14px;
-    font-weight: 500;
-    color: #74798c;
-  }
-
-  strong {
-    font-size: 20px;
-    color: #000;
-    line-height: 24px;
-  }
-`;
 
 /**
  * Component displaying the user's nutrients cards.
@@ -39,11 +11,11 @@ const Card = styled.div`
  *
  * <NutrientCard data={nutrient} />
  */
-function NutrientCard({ data }) {
+export default function NutrientCard({ data }) {
 	const { icon, amount, unit, label } = data;
 	return (
-		<Card>
-			<img src={icon} alt={`${label} icon`} />
+		<div className={styles.Card}>
+			<img className={styles.icon} src={icon} alt={`${label} icon`} />
 			<div>
 				<p>
 					<strong>
@@ -53,7 +25,7 @@ function NutrientCard({ data }) {
 				</p>
 				<p>{label}</p>
 			</div>
-		</Card>
+		</div>
 	);
 }
 
@@ -66,4 +38,3 @@ NutrientCard.propTypes = {
 	}).isRequired,
 };
 
-export default NutrientCard;

@@ -1,0 +1,30 @@
+
+.Card {
+height: 124px;
+width: 100%;
+max-width: 258px;
+padding: 32px 2.2vw 32px 2.2vw;
+background-color: #fbfbfb;
+border-radius: 5px;
+display: flex;
+align-items: center;
+margin-bottom: 35px;
+}
+
+.icon {
+  width: 60px;
+  height: 60px;
+  margin-right: 24px;
+}
+
+p {
+  font-size: 14px;
+  font-weight: 500;
+  color: #74798c;
+}
+
+strong {
+  font-size: 20px;
+  color: #000;
+  line-height: 24px;
+}

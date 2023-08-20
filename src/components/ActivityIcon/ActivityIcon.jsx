@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const Icon = styled.div`
   width: 64px;
@@ -29,11 +30,11 @@ const Icon = styled.div`
  */
 function ActivityIcon({ icon, alt }) {
 	return (
-		<a href="/">
+		<Link to="#">
 			<Icon>
 				<img src={icon} alt={alt} />
 			</Icon>
-		</a>
+		</Link>
 	);
 }
 

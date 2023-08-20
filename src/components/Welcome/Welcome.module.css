@@ -1,0 +1,43 @@
+
+.welcome {
+  padding-left: 115px;
+	margin: 50px 100px 40px;
+  
+}
+
+	@media screen and (max-width: 1536px) {
+    .welcome {
+      margin: 50px 100px 20px;
+    }
+	}
+  
+	@media screen and (max-width: 1024px) {
+    .welcome {
+      margin: 50px 50px 20px;
+    }
+	}
+
+	.name {
+		font-weight: 500;
+		font-size: 48px;
+		line-height: 24px;
+		color: black;
+		margin-bottom: 40px;
+
+  }
+
+  @media screen and (max-width: 1536px) {
+    .name {
+      margin-bottom: 20px;
+    }
+  }
+
+	.firstname {
+		color: var(--color-primary);
+	}
+
+	.congratulations {
+		font-weight: 400;
+		font-size: 18px;
+		line-height: 24px;
+	}

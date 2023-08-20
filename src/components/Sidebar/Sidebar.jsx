@@ -37,7 +37,7 @@ const Copyright = styled.div`
  *
  * <Sidebar icons={icons} />
  */
-function Sidebar({ icons }) {
+export default function Sidebar({ icons }) {
 	return (
 		<SideBar>
 			<div className="icons">
@@ -58,5 +58,3 @@ Sidebar.propTypes = {
 		})
 	).isRequired,
 };
-
-export default Sidebar;
