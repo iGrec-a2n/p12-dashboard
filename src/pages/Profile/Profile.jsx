@@ -13,7 +13,7 @@ import SessionsChart from "../../components/charts/SessionsChart/SessionsChart";
 import PerformanceChart from "../../components/charts/PerformanceChart/PerformanceChart";
 import ScoreChart from "../../components/charts/ScoreChart/ScoreChart";
 
-const USER_ID = 12;
+const USER_ID = 18;
 
 export default function Profile() {
   const { id: userID } = useParams();
@@ -25,22 +25,32 @@ export default function Profile() {
 
   useEffect(() => {
     async function getData() {
-      const user = new User(USER_ID);
-
-      const info = await user.getInfo();
-      const nutrients = await user.getNutrients();
-      const activity = await user.getActivity();
-      const averageSessions = await user.getAverageSessions();
-      const performance = await user.getPerformance();
-
-      setUserInfo(info);
-      setUserNutrients(nutrients);
-      setUserActivity(activity);
-      setUserAverageSessions(averageSessions);
-      setUserPerformance(performance);
+      try {
+        const user = new User(userID);
+        const [info, nutrients, activity, averageSessions, performance] =
+          await Promise.all([
+            user.getInfo(),
+            user.getNutrients(),
+            user.getActivity(),
+            user.getAverageSessions(),
+            user.getPerformance(),
+          ]);
+        setUserInfo(info);
+        setUserNutrients(nutrients);
+        setUserActivity(activity);
+        setUserAverageSessions(averageSessions);
+        setUserPerformance(performance);
+      } catch (error) {
+        console.log(error);
+      }
+      // const info = await user.getInfo();
+      // const nutrients = await user.getNutrients();
+      // const activity = await user.getActivity();
+      // const averageSessions = await user.getAverageSessions();
+      // const performance = await user.getPerformance();
     }
     getData();
-  }, []);
+  }, [userID]);
 
   return (
     <>

@@ -46,7 +46,7 @@ const BASE_URL = process.env.REACT_APP_API_URL;
 /**
  * Class representing a user.
  */
-class User {
+export default class User {
 	/**
 	 * Create a user.
 	 * @param {number} id - The user ID
@@ -169,5 +169,3 @@ class User {
 		}));
 	}
 }
-
-export default User;

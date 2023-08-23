@@ -12,6 +12,7 @@
 }
 
 .left {
+  width: 60%;
 }
 .bottom {
   margin-top: 40px;
@@ -32,4 +33,11 @@
   .right {
     margin-left: 0px;
   }
+}
+
+.nutrientCards {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  justify-content: space-between;
 }

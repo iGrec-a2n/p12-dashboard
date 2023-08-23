@@ -7,7 +7,7 @@
  *
  * @returns {Promise} Promise Object
  */
-async function request(URL) {
+export default async function request(URL) {
 	try {
 		const response = await fetch(URL);
 		return response.json();
@@ -16,5 +16,3 @@ async function request(URL) {
 		return null;
 	}
 }
-
-export default request;
