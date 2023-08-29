@@ -145,10 +145,6 @@ async function getUserProfile(id) {
   const userActivity = await getUserActivity(id);
   const userSession = await getUserAverageSessions(id);
   const userPerformance = await getUserPerformance(id);
-  console.log(
-    userActivity,
-  );
-	// userPerformance.forEach(value => console.log(value))
   return new UserModel(
     userData,
     userNutrients,

@@ -1,9 +1,15 @@
 import styles from "./Profile.module.css";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 /* Services */
-import User from "../../services/User";
+import getUserProfile from "../../services/request";
+
+/* Data */
+// import User from "../../services/Model/UserModel";
+// import userAverageSession from "../../data/entities/UserAverageSession"
+// import userPerformance from "../../data/entities/UserPerformance"
+// import userSession from "../../data/entities/UserSession"
 
 /* Components */
 import Welcome from "../../components/Welcome/Welcome";
@@ -13,48 +19,40 @@ import SessionsChart from "../../components/charts/SessionsChart/SessionsChart";
 import PerformanceChart from "../../components/charts/PerformanceChart/PerformanceChart";
 import ScoreChart from "../../components/charts/ScoreChart/ScoreChart";
 
-const USER_ID = 12;
+// const USER_ID = 12;
 
 export default function Profile() {
   const { id: userID } = useParams();
-  const [userInfo, setUserInfo] = useState();
-  const [userNutrients, setUserNutrients] = useState();
-  const [userAverageSessions, setUserAverageSessions] = useState();
-  const [userPerformance, setUserPerformance] = useState();
-  const [userActivity, setUserActivity] = useState();
+  const [userInfo, setUserInfo] = useState({});
+  const [userNutrients, setUserNutrients] = useState([]);
+  const [userAverageSessions, setUserAverageSessions] = useState([]);
+  const [userPerformance, setUserPerformance] = useState([]);
+  const [userActivity, setUserActivity] = useState([]);
+  // const navigate = useNavigate()
 
   useEffect(() => {
     async function getData() {
+      
       try {
-        const user = new User(userID);
-        const [info, nutrients, activity, averageSessions, performance] =
-          await Promise.all([
-            user.getInfo(),
-            user.getNutrients(),
-            user.getActivity(),
-            user.getAverageSessions(),
-            user.getPerformance(),
-          ]);
-        setUserInfo(info);
-        setUserNutrients(nutrients);
-        setUserActivity(activity);
-        setUserAverageSessions(averageSessions);
-        setUserPerformance(performance);
+        // const findCurrentUserId = result.find(user => user.id === userID);
+        // if (!findCurrentUserId) navigate('*');
+        const user = await getUserProfile(userID);
+        const {firstName, lastName, age, score} = user;
+        setUserInfo({firstName, lastName, age, score});
+        setUserNutrients(user.nutrients)
+        setUserActivity(user.activity)
+        setUserAverageSessions(user.session)
+        setUserPerformance(user.performance)
       } catch (error) {
         console.log(error);
       }
-      // const info = await user.getInfo();
-      // const nutrients = await user.getNutrients();
-      // const activity = await user.getActivity();
-      // const averageSessions = await user.getAverageSessions();
-      // const performance = await user.getPerformance();
     }
     getData();
   }, [userID]);
 
   return (
     <>
-      <Welcome userInfo={userInfo} />
+      <Welcome firstName={userInfo.firstName} lastName={userInfo.lastName} />
       <main className={styles.datas}>
         <div className={styles.left}>
           <div className={styles.top}>
@@ -65,7 +63,7 @@ export default function Profile() {
               <SessionsChart data={userAverageSessions} />
             )}
             {userPerformance && <PerformanceChart data={userPerformance} />}
-            {userInfo && <ScoreChart value={userInfo.todayScore} />}
+            {userInfo && <ScoreChart value={userInfo.score} />}
           </div>
         </div>
         <div className={styles.right}>

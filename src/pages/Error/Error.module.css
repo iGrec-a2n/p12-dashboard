@@ -1,0 +1,21 @@
+.error {
+  position: absolute;
+  top: 40%;
+  left: 20%;
+}
+.errorMessage {
+  font-size: 4rem;
+  font-weight: 600;
+
+}
+
+.errorLogo {
+  width: 140px;
+  height: auto;
+}
+
+.errorLink {
+  font-weight: 200;
+  font-size: 1.8rem;
+  color: var(--color-primary);
+}
