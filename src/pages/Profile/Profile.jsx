@@ -13,7 +13,7 @@ import SessionsChart from "../../components/charts/SessionsChart/SessionsChart";
 import PerformanceChart from "../../components/charts/PerformanceChart/PerformanceChart";
 import ScoreChart from "../../components/charts/ScoreChart/ScoreChart";
 
-const USER_ID = 18;
+const USER_ID = 12;
 
 export default function Profile() {
   const { id: userID } = useParams();
