@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styles from "./ActivityChart.module.css"
 import {
 	Bar,
 	BarChart,
@@ -11,65 +11,13 @@ import {
 	YAxis,
 } from 'recharts';
 
-const Background = styled.div`
-  background-color: #fbfbfb;
-  padding: 24px;
-  border-radius: 5px;
-  height: 320px;
-  width: 100%;
-  max-width: 835px;
-  position: relative;
-  grid-area: activity;
-
-  h3 {
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 2;
-    position: absolute;
-  }
-
-  line {
-    stroke: #dedede;
-  }
-
-  text {
-    font-weight: 500;
-    fill: #9b9eac;
-  }
-
-  .recharts-legend-wrapper ul {
-    display: flex;
-    justify-content: flex-end;
-    color: #74798c;
-    font-size: 14px;
-    font-weight: 500;
-
-    li {
-      margin-right: 32px;
-
-      &:before {
-        content: '·';
-        margin-right: 7px;
-        font-size: 60px;
-        vertical-align: middle;
-        line-height: 20px;
-        color: #000;
-      }
-    }
-
-    li:last-child:before {
-      color: red;
-    }
-  }
-`;
-
 const renderLegend = (props) => {
 	const { payload } = props;
 
 	return (
-		<ul>
+		<ul className={styles.rechartsLegendWrapper}>
 			{payload.map((entry) => (
-				<li key={`item-${entry.value}`}>{entry.value}</li>
+				<li key={`item-${entry.value}`} className={styles.legendItem}>{entry.value}</li>
 			))}
 		</ul>
 	);
@@ -93,7 +41,7 @@ const renderLegend = (props) => {
  */
 function ActivityChart({ data }) {
 	return (
-		<Background>
+		<div className={styles.background}>
 			<h3>Activité quotidienne</h3>
 			<ResponsiveContainer width="100%" height={272}>
 				<BarChart barGap={8} data={data}>
@@ -115,7 +63,7 @@ function ActivityChart({ data }) {
 						domain={['dataMin - 100', 'dataMax + 20']}
 						hide
 					/>
-					<XAxis type="category" dataKey="day" tickLine={false} />
+					<XAxis type="category" dataKey="daily" tickLine={false} />
 					<Tooltip
 						cursor={{ fill: '#C4C4C4', fillOpacity: '50%' }}
 						offset={20}
@@ -128,7 +76,7 @@ function ActivityChart({ data }) {
 							outline: 'none',
 						}}
 						itemStyle={{
-							fontSize: '7px',
+							fontSize: '12px',
 							color: '#fff',
 							lineHeight: '24px',
 						}}
@@ -165,14 +113,14 @@ function ActivityChart({ data }) {
 					/>
 				</BarChart>
 			</ResponsiveContainer>
-		</Background>
+		</div>
 	);
 }
 
 ActivityChart.propTypes = {
 	data: PropTypes.arrayOf(
 		PropTypes.shape({
-			day: PropTypes.number.isRequired,
+			daily: PropTypes.number.isRequired,
 			bodyweight: PropTypes.number.isRequired,
 			calories: PropTypes.number.isRequired,
 		})

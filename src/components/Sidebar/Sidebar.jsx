@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import ActivityIcon from '../ActivityIcon/ActivityIcon';
 
 const SideBar = styled.aside`
-  width: 117px;
-  height: 933px;
+  width: 120px;
+  height: 840px;
   background-color: black;
   position: relative;
   float: left;
@@ -21,7 +21,6 @@ const Copyright = styled.div`
   white-space: nowrap;
   position: absolute;
   bottom: 120px;
-  left: -18px;
 `;
 
 /**

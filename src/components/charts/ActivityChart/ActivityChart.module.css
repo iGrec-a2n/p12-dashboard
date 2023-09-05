@@ -1,19 +1,22 @@
 
 h3 {
   font-weight: 500;
-  font-size: 14px;
+  font-size: 18px;
   line-height: 2;
   position: absolute;
 }
+
 .background {
-  background-color: #fbfbfb;
+  background-color: var(--background-light);
   padding: 24px;
   border-radius: 5px;
   height: 320px;
   width: 100%;
   max-width: 835px;
   position: relative;
+  grid-area: "activity";
 }
+
 
 line {
   stroke: #dedede;
@@ -24,18 +27,22 @@ text {
   fill: #9b9eac;
 }
 
-.recharts-legend-wrapper ul {
+.rechartsLegendWrapper {
   display: flex;
   justify-content: flex-end;
   color: #74798c;
   font-size: 14px;
   font-weight: 500;
-}
-li {
-  margin-right: 32px;
+  position: relative;
+  right: 0;
+  gap: 10px;
 }
 
-li:before {
+.legendItem {
+  max-width: 180px;
+}
+
+.legendItem:before {
   content: "·";
   margin-right: 7px;
   font-size: 60px;

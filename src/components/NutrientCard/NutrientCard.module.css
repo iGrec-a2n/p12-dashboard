@@ -1,13 +1,12 @@
-
 .Card {
-height: 125px;
-width: 260px;
-max-width: 260px;
-padding: 0 32px;
-background-color: #fbfbfb;
-border-radius: 5px;
-display: flex;
-align-items: center;
+  display: flex;
+  height: 125px;
+  width: 260px;
+  max-width: 260px;
+  padding: 0 32px;
+  background-color: var(--background-light);
+  border-radius: 5px;
+  align-items: center;
 }
 
 .icon {
