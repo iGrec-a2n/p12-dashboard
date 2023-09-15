@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Background = styled.div`
-  background-color: #fbfbfb;
+  background-color: var(--background-light);
   padding: 24px 0;
   border-radius: 5px;
   height: 263px;
@@ -36,7 +36,7 @@ const ProgressCircle = styled.div`
     position: relative;
     width: 210px;
     height: 210px;
-    transform: rotate(-90deg) scale(0.73);
+    transform: rotate(-90deg) scale(0.63);
     background-color: #fff;
     border-radius: 50%;
     overflow: visible;
@@ -59,7 +59,7 @@ const ProgressCircle = styled.div`
   }
 
   :nth-child(1) svg circle:last-of-type {
-    stroke: #f39c12;
+    stroke: var(--color-primary);
   }
 
   :nth-child(2) svg circle:last-of-type {

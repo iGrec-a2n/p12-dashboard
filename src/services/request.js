@@ -1,4 +1,10 @@
 import UserModel from "./Model/UserModel";
+import {
+  USER_MAIN_DATA,
+  USER_AVERAGE_SESSIONS,
+  USER_PERFORMANCE,
+  USER_ACTIVITY,
+} from "../data/mocks/mockData";
 
 import CaloriesIcon from "../assets/icons/dashboard/icon_calories.svg";
 import ProteinIcon from "../assets/icons/dashboard/icon_protein.svg";
@@ -6,6 +12,8 @@ import CarbsIcon from "../assets/icons/dashboard/icon_carbs.svg";
 import FatIcon from "../assets/icons/dashboard/icon_fat.svg";
 
 const BASE_URL = process.env.REACT_APP_API_URL;
+
+const IS_MOCK_DATA_ACTIVE = false;
 
 /**
  * Proxy function to the fetch API.
@@ -16,10 +24,24 @@ const BASE_URL = process.env.REACT_APP_API_URL;
  *
  * @returns {Promise} Promise Object
  */
-async function request(URL) {
+async function request(id, target) {
   try {
-    const response = await fetch(URL);
-    return response.json();
+    if (IS_MOCK_DATA_ACTIVE) {
+      switch (target) {
+        case "/activity":
+          return USER_ACTIVITY.find((data) => data.userId === id);
+        case "/average-sessions":
+          return USER_AVERAGE_SESSIONS.find((data) => data.userId === id);
+        case "/performance":
+          return USER_PERFORMANCE.find((data) => data.userId === id);
+        default:
+          return USER_MAIN_DATA.find((data) => data.id === id);
+      }
+    } else {
+      const response = await fetch(`${BASE_URL}/user/${Number(id)}${target}`);
+      const responseData = await response.json();
+      return responseData.data;
+    }
   } catch (err) {
     console.error(err);
     return null;
@@ -29,56 +51,45 @@ async function request(URL) {
 /**
  * Get basic user data.
  *
- * @returns {Promise<UserInfo>} Basic user information.
+ * @returns {Promise<UserInfo>} Basic user information and list of information about calories & macronutrients.
  */
 async function getUserData(id) {
-  const response = await request(`${BASE_URL}/user/${Number(id)}`);
+  const response = await request(Number(id), "");
   if (!response) return null;
-  const { data } = response;
+  const data = response;
   return {
-		id: data.id,
+    id: data.id,
     firstName: data.userInfos.firstName,
     lastName: data.userInfos.lastName,
     age: data.userInfos.age,
     todayScore: (data.score || data.todayScore) * 100,
+    nutrients: [
+      {
+        icon: CaloriesIcon,
+        label: "Calories",
+        amount: data.keyData.calorieCount,
+        unit: "kCal",
+      },
+      {
+        icon: ProteinIcon,
+        label: "Protéines",
+        amount: data.keyData.proteinCount,
+        unit: "g",
+      },
+      {
+        icon: CarbsIcon,
+        label: "Glucides",
+        amount: data.keyData.carbohydrateCount,
+        unit: "g",
+      },
+      {
+        icon: FatIcon,
+        label: "Lipides",
+        amount: data.keyData.lipidCount,
+        unit: "g",
+      },
+    ],
   };
-}
-
-/**
- * Get user calories & macronutrients data.
- *
- * @returns {Promise<Nutrient[]>} List of information about calories & macronutrients.
- */
-async function getUserNutrients(id) {
-  const response = await request(`${BASE_URL}/user/${id}`);
-  if (!response) return null;
-  const { data } = response;
-  return [
-    {
-      icon: CaloriesIcon,
-      label: "Calories",
-      amount: data.keyData.calorieCount,
-      unit: "kCal",
-    },
-    {
-      icon: ProteinIcon,
-      label: "Protéines",
-      amount: data.keyData.proteinCount,
-      unit: "g",
-    },
-    {
-      icon: CarbsIcon,
-      label: "Glucides",
-      amount: data.keyData.carbohydrateCount,
-      unit: "g",
-    },
-    {
-      icon: FatIcon,
-      label: "Lipides",
-      amount: data.keyData.lipidCount,
-      unit: "g",
-    },
-  ];
 }
 
 /**
@@ -87,9 +98,9 @@ async function getUserNutrients(id) {
  * @returns {Promise<ActivityDay[]>} List of information about user sessions.
  */
 async function getUserActivity(id) {
-  const response = await request(`${BASE_URL}/user/${id}/activity`);
+  const response = await request(Number(id), "/activity");
   if (!response) return null;
-  const { data } = response;
+  const data = response;
   return data.sessions.map((session, i) => ({
     date: session.day,
     daily: i + 1,
@@ -104,9 +115,9 @@ async function getUserActivity(id) {
  * @returns {Promise<AverageSession[]>} List of information about user sessions.
  */
 async function getUserAverageSessions(id) {
-  const response = await request(`${BASE_URL}/user/${id}/average-sessions`);
+  const response = await request(Number(id), "/average-sessions");
   if (!response) return null;
-  const { data } = response;
+  const data = response;
   const days = ["L", "M", "M", "J", "V", "S", "D"];
   return data.sessions.map((session) => ({
     day: days[session.day - 1],
@@ -120,9 +131,9 @@ async function getUserAverageSessions(id) {
  * @returns {Promise<Performance[]>} List of information about user performance.
  */
 async function getUserPerformance(id) {
-  const response = await request(`${BASE_URL}/user/${id}/performance`);
+  const response = await request(Number(id), "/performance");
   if (!response) return null;
-  const { data } = response;
+  const data = response;
 
   const TRANSLATE = {
     cardio: "Cardio",
@@ -141,13 +152,12 @@ async function getUserPerformance(id) {
 
 async function getUserProfile(id) {
   const userData = await getUserData(id);
-  const userNutrients = await getUserNutrients(id);
   const userActivity = await getUserActivity(id);
   const userSession = await getUserAverageSessions(id);
   const userPerformance = await getUserPerformance(id);
   return new UserModel(
     userData,
-    userNutrients,
+    userData.nutrients,
     userActivity,
     userSession,
     userPerformance

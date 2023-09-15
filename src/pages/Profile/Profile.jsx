@@ -5,12 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 /* Services */
 import getUserProfile from "../../services/request";
 
-/* Data */
-// import User from "../../services/Model/UserModel";
-// import userAverageSession from "../../data/entities/UserAverageSession"
-// import userPerformance from "../../data/entities/UserPerformance"
-// import userSession from "../../data/entities/UserSession"
-
 /* Components */
 import Welcome from "../../components/Welcome/Welcome";
 import NutrientCard from "../../components/NutrientCard/NutrientCard";
@@ -19,7 +13,7 @@ import SessionsChart from "../../components/charts/SessionsChart/SessionsChart";
 import PerformanceChart from "../../components/charts/PerformanceChart/PerformanceChart";
 import ScoreChart from "../../components/charts/ScoreChart/ScoreChart";
 
-// const USER_ID = 12;
+const AVAILABLE_ARRAY = ['12','18'];
 
 export default function Profile() {
   const { id: userID } = useParams();
@@ -28,15 +22,15 @@ export default function Profile() {
   const [userAverageSessions, setUserAverageSessions] = useState([]);
   const [userPerformance, setUserPerformance] = useState([]);
   const [userActivity, setUserActivity] = useState([]);
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
 
   useEffect(() => {
     async function getData() {
       
       try {
-        // const findCurrentUserId = result.find(user => user.id === userID);
-        // if (!findCurrentUserId) navigate('*');
-        const user = await getUserProfile(userID);
+        const findCurrentUserId = AVAILABLE_ARRAY.find(id => id === userID);
+        if (!findCurrentUserId) navigate('*');
+        const user = await getUserProfile(findCurrentUserId);
         const {firstName, lastName, age, score} = user;
         setUserInfo({firstName, lastName, age, score});
         setUserNutrients(user.nutrients)
@@ -48,11 +42,11 @@ export default function Profile() {
       }
     }
     getData();
-  }, [userID]);
+  }, [userID, navigate]);
 
   return (
     <>
-      <Welcome firstName={userInfo.firstName} lastName={userInfo.lastName} />
+      <Welcome userInfo={userInfo} />
       <main className={styles.datas}>
         <div className={styles.left}>
           <div className={styles.top}>
@@ -63,7 +57,7 @@ export default function Profile() {
               <SessionsChart data={userAverageSessions} />
             )}
             {userPerformance && <PerformanceChart data={userPerformance} />}
-            {userInfo && <ScoreChart value={userInfo.score} />}
+            {userInfo && <ScoreChart value={Number(userInfo.score)} />}
           </div>
         </div>
         <div className={styles.right}>

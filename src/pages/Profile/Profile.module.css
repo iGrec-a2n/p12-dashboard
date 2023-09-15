@@ -1,14 +1,18 @@
 .datas {
-  padding-left: 115px;
+  padding-left: 95px;
   display: flex;
-  margin-left: 100px;
+  gap: 4em;
 }
 
 @media screen and (max-width: 1024px) {
   .datas {
-    flex-direction: column-reverse;
     margin-left: 50px;
+    padding-left: 50px;
   }
+  .right {
+    margin-left: 0px;
+  }
+
 }
 
 .left {
@@ -26,13 +30,8 @@
 }
 
 .right {
-  margin-left: 50px;
-}
-
-@media screen and (max-width: 1024px) {
-  .right {
-    margin-left: 0px;
-  }
+  width: 40%;
+  max-width: 270px;
 }
 
 .nutrientCards {

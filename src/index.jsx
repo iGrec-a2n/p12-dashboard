@@ -11,12 +11,12 @@ import Home from './pages/Home/Home';
 import Profile from './pages/Profile/Profile';
 import Header from './components/Header/Header'
 import Sidebar from './components/Sidebar/Sidebar';
+import Error from "./pages/Error/Error";
 
 import yogaIcon from './assets/icons/sidebar/icon_yoga.svg';
 import swimmingIcon from './assets/icons/sidebar/icon_swimming.svg';
 import cyclingIcon from './assets/icons/sidebar/icon_cycling.svg';
 import liftingIcon from './assets/icons/sidebar/icon_lifting.svg';
-import Error from "./pages/Error/Error";
 
 
 const SIDEBAR_ICONS = [
@@ -36,7 +36,7 @@ root.render(
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/user/:id' element={<Profile />} />
-        <Route path="/*" element={<Error />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

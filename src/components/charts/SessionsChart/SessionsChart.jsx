@@ -145,7 +145,7 @@ function SessionsChart({ data }) {
 							outline: 'none',
 						}}
 						itemStyle={{
-							fontSize: '8px',
+							fontSize: '12px',
 							fontWeight: '500',
 							color: '#000',
 							lineHeight: '0',
