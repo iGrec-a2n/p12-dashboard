@@ -13,7 +13,7 @@ import FatIcon from "../assets/icons/dashboard/icon_fat.svg";
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
-const isMockData = true;
+const IS_MOCK_DATA_ACTIVE = false;
 
 /**
  * Proxy function to the fetch API.
@@ -26,7 +26,7 @@ const isMockData = true;
  */
 async function request(id, target) {
   try {
-    if (isMockData) {
+    if (IS_MOCK_DATA_ACTIVE) {
       switch (target) {
         case "/activity":
           return USER_ACTIVITY.find((data) => data.userId === id);

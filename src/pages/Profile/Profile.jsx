@@ -13,7 +13,7 @@ import SessionsChart from "../../components/charts/SessionsChart/SessionsChart";
 import PerformanceChart from "../../components/charts/PerformanceChart/PerformanceChart";
 import ScoreChart from "../../components/charts/ScoreChart/ScoreChart";
 
-const availaibleIdArray = ['12','18'];
+const AVAILABLE_ARRAY = ['12','18'];
 
 export default function Profile() {
   const { id: userID } = useParams();
@@ -28,9 +28,9 @@ export default function Profile() {
     async function getData() {
       
       try {
-        const findCurrentUserId = availaibleIdArray.find(id => id === userID);
+        const findCurrentUserId = AVAILABLE_ARRAY.find(id => id === userID);
         if (!findCurrentUserId) navigate('*');
-        const user = await getUserProfile(userID);
+        const user = await getUserProfile(findCurrentUserId);
         const {firstName, lastName, age, score} = user;
         setUserInfo({firstName, lastName, age, score});
         setUserNutrients(user.nutrients)

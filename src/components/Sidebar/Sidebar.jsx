@@ -5,7 +5,7 @@ import ActivityIcon from '../ActivityIcon/ActivityIcon';
 
 const SideBar = styled.aside`
   width: 120px;
-  height: 840px;
+  height: 865px;
   background-color: black;
   position: relative;
   float: left;
